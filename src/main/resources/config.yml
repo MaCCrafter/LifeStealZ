@@ -128,6 +128,9 @@ heartGainCooldown:
   # Prevents picking up hearts from the groun while on cooldown
   preventPickup: true
 
+# Enable this option only if you have problems with the UUIDs of plugins like Jpremium, Limboauth or Authme & Fastlogin
+useSavedUUIDs: false
+
 antiAlt:
   # If the anti alt system should be enabled
   enabled: true

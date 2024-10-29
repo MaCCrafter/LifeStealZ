@@ -14,6 +14,7 @@ import org.strassburger.lifestealz.util.storage.MariaDBStorage;
 import org.strassburger.lifestealz.util.storage.MySQLStorage;
 import org.strassburger.lifestealz.util.storage.Storage;
 import org.strassburger.lifestealz.util.storage.SQLiteStorage;
+import org.strassburger.lifestealz.util.uuids.UUIDFile;
 import org.strassburger.lifestealz.util.worldguard.WorldGuardManager;
 
 public final class LifeStealZ extends JavaPlugin {
@@ -27,10 +28,12 @@ public final class LifeStealZ extends JavaPlugin {
     private RecipeManager recipeManager;
     private GeyserManager geyserManager;
     private GeyserPlayerFile geyserPlayerFile;
+    private UUIDFile uuidFile;
     private WebHookManager webHookManager;
     private final boolean hasWorldGuard = Bukkit.getPluginManager().getPlugin("WorldGuard") != null;
     private final boolean hasPlaceholderApi = Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null;
     private final boolean hasGeyser = Bukkit.getPluginManager().getPlugin("Geyser-Spigot") != null;
+    private boolean useSavedUUIDs;
 
 
     @Override
@@ -82,6 +85,12 @@ public final class LifeStealZ extends JavaPlugin {
             }
         }
 
+        useSavedUUIDs = configManager.getCustomConfig("config").getBoolean("useSavedUUIDs");
+
+        if(useSavedUUIDs) {
+            uuidFile = new UUIDFile();
+        }
+
         getLogger().info("LifeStealZ enabled!");
     }
 
@@ -122,6 +131,10 @@ public final class LifeStealZ extends JavaPlugin {
         return geyserPlayerFile;
     }
 
+    public UUIDFile getUUIDFile() {
+        return uuidFile;
+    }
+
     public boolean hasWorldGuard() {
         return hasWorldGuard;
     }
@@ -132,6 +145,10 @@ public final class LifeStealZ extends JavaPlugin {
 
     public boolean hasGeyser() {
         return hasGeyser;
+    }
+
+    public boolean useSavedUUIDs() {
+        return useSavedUUIDs;
     }
 
     public WebHookManager getWebHookManager() {

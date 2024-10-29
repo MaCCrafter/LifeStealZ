@@ -169,7 +169,13 @@ public class SettingsCommand implements CommandExecutor, TabCompleter {
         PlayerData targetPlayerData;
 
         if(plugin.hasGeyser() && plugin.getGeyserPlayerFile().isPlayerStored(targetPlayerName)) {
+
             targetPlayerData = storage.load(geyserManager.getOfflineBedrockPlayerUniqueId(targetPlayerName));
+
+        } else if(plugin.useSavedUUIDs()) {
+
+            targetPlayerData = plugin.getStorage().load(plugin.getUUIDFile().getPlayerUUID(targetPlayerName));
+
         } else {
             Player onlinePlayer = plugin.getServer().getPlayer(targetPlayerName);
             UUID targetUUID = (onlinePlayer != null) ? onlinePlayer.getUniqueId() : plugin.getServer().getOfflinePlayer(targetPlayerName).getUniqueId();

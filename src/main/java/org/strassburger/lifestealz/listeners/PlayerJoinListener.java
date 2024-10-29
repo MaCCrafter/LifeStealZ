@@ -11,6 +11,7 @@ import org.strassburger.lifestealz.util.geysermc.GeyserManager;
 import org.strassburger.lifestealz.util.geysermc.GeyserPlayerFile;
 import org.strassburger.lifestealz.util.storage.PlayerData;
 import org.strassburger.lifestealz.util.storage.Storage;
+import org.strassburger.lifestealz.util.uuids.UUIDFile;
 
 public class PlayerJoinListener implements Listener {
 
@@ -18,6 +19,7 @@ public class PlayerJoinListener implements Listener {
 
     private GeyserManager geyserManager = LifeStealZ.getInstance().getGeyserManager();
     private GeyserPlayerFile geyserPlayerFile = LifeStealZ.getInstance().getGeyserPlayerFile();
+    private UUIDFile uuidFile = LifeStealZ.getInstance().getUUIDFile();
 
     public PlayerJoinListener(LifeStealZ plugin) {
         this.plugin = plugin;
@@ -32,6 +34,10 @@ public class PlayerJoinListener implements Listener {
             if(geyserManager.isBedrockPlayer(player)) {
                 geyserPlayerFile.savePlayer(player.getUniqueId(), player.getName());
             }
+        }
+
+        if(LifeStealZ.getInstance().useSavedUUIDs()) {
+                uuidFile.savePlayer(player.getUniqueId(), player.getName());
         }
 
         if (!WhitelistManager.isWorldWhitelisted(player)) {

@@ -70,6 +70,10 @@ public class HeartCommand implements CommandExecutor, TabCompleter {
 
             playerdata = plugin.getStorage().load(plugin.getGeyserManager().getOfflineBedrockPlayerUniqueId(targetName));
 
+        } else if(plugin.useSavedUUIDs()) {
+
+            playerdata = plugin.getStorage().load(plugin.getUUIDFile().getPlayerUUID(targetName));
+
         } else {
             OfflinePlayer target = Bukkit.getOfflinePlayer(targetName);
 

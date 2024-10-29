@@ -18,6 +18,7 @@ import org.strassburger.lifestealz.util.WhitelistManager;
 import org.strassburger.lifestealz.util.storage.PlayerData;
 
 import java.util.List;
+import java.util.UUID;
 
 public class EliminateCommand implements CommandExecutor, TabCompleter {
     private final LifeStealZ plugin;
@@ -50,7 +51,13 @@ public class EliminateCommand implements CommandExecutor, TabCompleter {
 
 
     private void eliminatePlayer(CommandSender sender, Player targetPlayer) {
-        PlayerData playerData = plugin.getStorage().load(targetPlayer.getUniqueId());
+        UUID uuid;
+        if(plugin.useSavedUUIDs()) {
+            uuid = plugin.getUUIDFile().getPlayerUUID(targetPlayer.getName());
+        } else {
+            uuid = targetPlayer.getUniqueId();
+        }
+        PlayerData playerData = plugin.getStorage().load(uuid);
         playerData.setMaxHealth(0.0);
         plugin.getStorage().save(playerData);
 
